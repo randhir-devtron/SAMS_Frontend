@@ -1,0 +1,116 @@
+
+#root {
+  /* margin: 0 auto; */
+  /* text-align: center; */
+  /* width: 100vw; */
+  height: 100vh;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+
+/* Login-Page  */
+.login-page1 {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.Login-Page {
+  height: 80%;
+  width: 80%;
+  border-style: solid;
+  /* border: 144px red; */
+  display: flex;
+  /* flex-direction: column;
+  margin: auto; */
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Login {
+  height: 100%;
+  width: 50%;
+  /* float: left; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Login-Right {
+  height: auto;
+  /* margin: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column; */
+  font-weight: bold;
+}
+.Login-Left {
+  height: auto;
+  font-weight: bold;
+}
+
+.Login-Text {
+  height: auto;
+}
+
+.Login-Form input {
+  margin: 10px;
+}
+
+
+.home1{
+  width: 100vw;
+  height: 100vh;
+}
+.Home {
+  /* text-align: center; */
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 900px;
+}
+
+.search {
+  padding: 10px;
+  font-size: 20px;
+}
