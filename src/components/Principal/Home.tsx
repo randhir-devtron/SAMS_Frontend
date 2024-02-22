@@ -36,25 +36,29 @@ function Home() {
     return <div className="Home">
         <div className="home-header">
             <input type="text" placeholder='Search...' className='search' />
-            <button className='modal-button' onClick={handleClick}>Add Student</button>
+            <button className='modal-button' onClick={handleClick}>Add Role</button>
         </div>
         {modalFlag && <PrincipalModal SetModalFlag={SetModalFlag} />}
         <table className='table'>
             <colgroup>
                 <col span={3} />
             </colgroup>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Qualification</th>
-            </tr>
-            {formData.map((data) => (
-                <tr className='listItem' key={data.ID}>
-                    <td>{data.ID}</td>
-                    <td>{data.firstname + " " + data.lastname}</td>
-                    <td>{data.qualification}</td>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Qualification</th>
                 </tr>
-            ))}
+            </thead>
+            <tbody>
+                {formData.map((data) => (
+                    <tr className='listItem' key={data.ID}>
+                        <td>{data.ID}</td>
+                        <td>{data.firstname + " " + data.lastname}</td>
+                        <td>{data.qualification}</td>
+                    </tr>
+                ))}
+            </tbody>
         </table>
     </div>
 }

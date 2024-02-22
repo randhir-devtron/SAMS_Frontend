@@ -5,8 +5,8 @@ function Login() {
 
     // const [role, setRole] = useState<string>('');
     const [formData, setFormData] = useState<{ username: string, password: string }>({
-        username: ' ',
-        password: ' '
+        username: '',
+        password: ''
     })
     const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
