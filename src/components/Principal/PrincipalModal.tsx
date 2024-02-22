@@ -25,32 +25,23 @@ const PrincipalModal: React.FC<Props> = ({ SetModalFlag }) => {
                 },
                 body: JSON.stringify(formData),
             });
-
+            console.log(response);
             if (!response.ok) {
                 // Handle non-200 responses
                 throw new Error('Login failed');
             }
 
             const data = await response.json();
-
-            // Assuming the backend responds with a token
             const token = data.token;
-
-            // Store the token in local storage or a cookie for future authenticated requests
             localStorage.setItem('token', token);
-
-            // Redirect the user or perform other actions upon successful login
             console.log('Login successful');
         } catch (error) {
-            // Handle network errors or other errors
             console.error('Error occurred:', (error as Error).message);
         }
     };
 
     const SetCredential = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Extract the 'name' and 'value' properties from the input field that triggered the change.
         const { name, value } = e.target;
-        // Update the 'formData' state by spreading the current state and updating the value of the property specified by 'name'.
         console.log(name, value)
         setFormData({ ...formData, [name]: value });
     };

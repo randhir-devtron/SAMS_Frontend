@@ -1,15 +1,37 @@
-// import { useState } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../App.css'
-// import { useState } from 'react'
-// import React from 'react'
-import Users from '../Users'
 import PrincipalModal from './PrincipalModal'
 function Home() {
     const [modalFlag, SetModalFlag] = useState(false);
     function handleClick() {
         SetModalFlag(true);
     }
+    const [formData, setFormData] = useState<{
+        ID: number;
+        firstname: string;
+        lastname: string;
+        qualification: string;
+    }[]>([]);
+
+    useEffect(() => {
+        const handleLoadData = async () => {
+            const response = await fetch('http://localhost:9000/teachers', {
+                method: 'GET',
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const datas = await response.json()
+                setFormData(datas);
+                return
+            }
+            console.log("Data could not fetched from frontend : ", response.statusText);
+
+        }
+        handleLoadData();
+    }, [])
 
     return <div className="Home">
         <div className="home-header">
@@ -26,20 +48,14 @@ function Home() {
                 <th>Name</th>
                 <th>Qualification</th>
             </tr>
-            {Users.map((user) => (
-                <tr className='listItem'>
-                    <td>{user.id}</td>
-                    <td>{user.firstname + " " + user.lastname}</td>
-                    <td>{user.Qualification}</td>
+            {formData.map((data) => (
+                <tr className='listItem' key={data.ID}>
+                    <td>{data.ID}</td>
+                    <td>{data.firstname + " " + data.lastname}</td>
+                    <td>{data.qualification}</td>
                 </tr>
             ))}
         </table>
-        {/* <input type="text" placeholder='Search...' className='search' />
-        <ul className='list'>
-            {Users.map((user) => (
-                <li className='listItem'>{user.firstname}</li>
-            ))}
-        </ul> */}
     </div>
 }
 

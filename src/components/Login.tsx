@@ -1,41 +1,66 @@
 import '../App.css'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 function Login() {
 
-
+    // const [role, setRole] = useState<string>('');
     const [formData, setFormData] = useState<{ username: string, password: string }>({
         username: ' ',
         password: ' '
     })
-
+    const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const response = await fetch('http://localhost:9000/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
                 body: JSON.stringify(formData),
+                credentials: 'include'
             });
+            // const data = response.json();
 
             if (!response.ok) {
-                // Handle non-200 responses
                 throw new Error('Login failed');
             }
 
-            const data = await response.json();
+            const contentType = response.headers.get('content-type');
+            console.log(contentType)
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Invalid JSON response from server');
+            }
+            let data;
+            try {
+                data = await response.json();
+            } catch (jsonError) {
+                throw new Error('Failed to parse JSON response from server');
+            }
+            if (Object.keys(data).length === 0) {
+                throw new Error('Empty or malformed JSON response from server');
+            }
+            const cookies = document.cookie.split(';').reduce((acc: Record<string, string>, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
 
-            // Assuming the backend responds with a token
-            const token = data.token;
-
-            // Store the token in local storage or a cookie for future authenticated requests
+            const token = cookies.token;
             localStorage.setItem('token', token);
-
-            // Redirect the user or perform other actions upon successful login
+            // console.log(token)
+            // console.log(response)
+            console.log(data)
+            console.log(data.role)
+            if (data.role == 'Student') {
+                navigate("/login/student");
+                return
+            }
             console.log('Login successful');
+            navigate("/login/principal");
         } catch (error) {
             // Handle network errors or other errors
+            console.log("Inside catch")
             console.error('Error occurred:', (error as Error).message);
         }
     };
@@ -43,9 +68,7 @@ function Login() {
 
 
     const SetCredential = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Extract the 'name' and 'value' properties from the input field that triggered the change.
         const { name, value } = e.target;
-        // Update the 'formData' state by spreading the current state and updating the value of the property specified by 'name'.
         console.log(name, value)
         setFormData({ ...formData, [name]: value });
     };
